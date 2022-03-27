@@ -1,6 +1,6 @@
 package com.atm.api;
 
-public class MoneyTracker {
+public class AutomaticTellerMachine {
 	
 	private int $20value = 20;   // 20 dollar bill value 
 	
@@ -12,7 +12,7 @@ public class MoneyTracker {
 	private int atmCurrentCash;
 	
 
-	public MoneyTracker(int notesCounter20, int notesCounter50) {
+	public AutomaticTellerMachine(int notesCounter20, int notesCounter50) {
 		
 		this.notesCounter20 = notesCounter20;
 		this.notesCounter50 = notesCounter50;
@@ -24,9 +24,15 @@ public class MoneyTracker {
 		return "the amount of 20 dollars bills are " + notesCounter20 + ",the amount of 50 dollars bills are " + notesCounter50 + "]";
 		
 	}
-	
-	
-	
+
+
+	public int get$20value() {
+		return $20value;
+	}
+
+	public int get$50value() {
+		return $50value;
+	}
 
 	public int getNotesCounter20() {
 		return notesCounter20;
@@ -62,15 +68,15 @@ public class MoneyTracker {
 		
 	}
 	
-	public void withdrawl(int dispencingAmount) {
-		
-		this.atmCurrentCash = this.atmCurrentCash - dispencingAmount;
+	public void withdrawl(int withdrawalAmount) {
+
+			this.atmCurrentCash = this.atmCurrentCash - withdrawalAmount;
 	}
 
-	
-	
-	
-	
+
+
+
+
 
    
 }
