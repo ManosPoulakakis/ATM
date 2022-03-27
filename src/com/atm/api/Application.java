@@ -49,9 +49,31 @@ public class Application {
 				if (withdrawalAmount <= m1.getAtmCurrentCash()) {
 
 					List<NoteCombination> Combination = getAllCombinations(withdrawalAmount, m1);
+
 					System.out.println();
 
+					NoteCombination FinalCombination =  getCombination(Combination ,  m1);
+					 if (FinalCombination.getNote$20() == 0 &&  FinalCombination.getNote$50() == 0){
+						 System.out.println("Combination not available,pleasse try another amount");
+					 }
+					 else {
+						 m1.withdrawl(withdrawalAmount);
+						 notesDiff50 = m1.getNotesCounter50() - FinalCombination.getNote$50() ;
+						 notesDiff20 =  m1.getNotesCounter20() - FinalCombination.getNote$20() ;
+						 m1.setNotesCounter50(notesDiff50);
+						 m1.setNotesCounter20(notesDiff20);
+						 System.out.println("Here is your money,thank you");
+						 System.out.println("You withdrawed " + withdrawalAmount + "dollars");
 
+					 }
+
+
+
+				}
+				else{
+					System.out.println("We are sorry we dont have this amount of cash at the time please try another amount ");
+					System.out.println(" or come back later ") ;
+					break;
 				}
 			}
 		
@@ -85,7 +107,7 @@ public class Application {
 		List<NoteCombination> noteCombinationList = new ArrayList<NoteCombination>();
 		boolean nopair = true;
 
-		for (int i = 0; i <= withdrawalAmount / m1.get$50value(); i++) {
+		for (int i = withdrawalAmount / m1.get$50value(); i >= 0; i--) {
 
 			j = (withdrawalAmount - m1.get$50value() * i) / m1.get$20value();
 			jmod = (withdrawalAmount - m1.get$50value() * i) % m1.get$20value();
@@ -94,7 +116,7 @@ public class Application {
 				noteCombination.setNote$20(j);
 				noteCombination.setNote$50(i);
 				noteCombinationList.add(noteCombination);
-				System.out.println("[ "+j +","+" " + i + "]");
+				System.out.println("[20$| "+j +","+" " + i + "|50$]");
 				nopair = false;
 			}
 		}
@@ -104,8 +126,29 @@ public class Application {
 		}
 
 		return noteCombinationList;
+
+
+	}
+	public static NoteCombination getCombination(List<NoteCombination> noteCombinationList , AutomaticTellerMachine m1)  {
+
+
+		for (NoteCombination noteCombination : noteCombinationList){
+			if(checkValidCombination(noteCombination ,  m1)){
+				return noteCombination;
+			}
+		}
+                return new NoteCombination();
+	}
+	public static boolean checkValidCombination(NoteCombination noteCombination,AutomaticTellerMachine m1 ) {
+
+		if (noteCombination.getNote$20() <= m1.getNotesCounter20() && noteCombination.getNote$50() <= m1.getNotesCounter50()) {
+			return true;
+		}else{
+			return false;
+		}
 	}
 	 }
+
 
 
 
